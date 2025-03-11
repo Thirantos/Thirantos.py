@@ -1,6 +1,6 @@
 from functools import wraps
 from flask import request, Response
-from thirantos.authenticator import Authenticator
+from authenticator import Authenticator
 
 def secure(auth: Authenticator):
     def decorator(func):
