@@ -1,0 +1,7 @@
+[project]
+name = "Thirantos"
+version = "2025.0.0"
+dependencies = [
+    "flask",
+    "sqlalchemy"
+]
