@@ -1,7 +1,15 @@
 [project]
 name = "Thirantos"
 version = "2025.0.0"
+description = "A personal package for useful utilities."
+authors = [
+    { name = "Thirantos"}
+]
 dependencies = [
     "flask",
     "sqlalchemy"
 ]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
