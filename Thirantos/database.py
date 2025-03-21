@@ -56,11 +56,11 @@ def _ensure_clauses(clause: ClauseType) -> Clauses:
     Returns:
         Clauses: A list of clauses.
     """
-    if type(clause) is sqlalchemy.Executable:
+    if isinstance(clause, sqlalchemy.Executable):
         return [(clause, {})]
-    if type(clause) is Clause:
+    if isinstance(clause, tuple) and len(clause) == 2 and isinstance(clause[0], sqlalchemy.Executable):
         return [clause]
-    return clause
+    return list(clause) if isinstance(clause, list) else [clause]
 
 class Database:
     """
