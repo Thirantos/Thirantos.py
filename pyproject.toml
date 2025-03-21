@@ -1,6 +1,6 @@
 [project]
 name = "Thirantos"
-version = "2025.0.0"
+version = "2025.0.1"
 description = "A personal package for useful utilities."
 authors = [
     { name = "Thirantos"}

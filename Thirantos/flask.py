@@ -3,6 +3,15 @@ from flask import request, Response
 from authenticator import Authenticator
 
 def secure(auth: Authenticator):
+    """
+    Decorator to secure a Flask route with token-based authentication.
+
+    Args:
+        auth (Authenticator): An instance of an Authenticator to validate tokens.
+
+    Returns:
+        function: The decorated function with authentication.
+    """
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -13,7 +22,16 @@ def secure(auth: Authenticator):
         return wrapper
     return decorator
 
-def parameters( **params):
+def parameters(**params):
+    """
+    Decorator to parse and validate query parameters for a Flask route.
+
+    Args:
+        **params: Default values for the query parameters.
+
+    Returns:
+        function: The decorated function with parsed parameters.
+    """
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -27,7 +45,16 @@ def parameters( **params):
         return wrapper
     return decorator
 
-def wrap_data(data):
+def wrap_data(data) -> dict[str, any]:
+    """
+    Wrap data in a dictionary with a count of the results.
+
+    Args:
+        data (list): The data to wrap.
+
+    Returns:
+        dict: A dictionary containing the count and the results.
+    """
     return {
         "count": len(data),
         "results": data
