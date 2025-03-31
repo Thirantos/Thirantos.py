@@ -15,7 +15,7 @@ class Authenticator(ABC):
         pass
 
     @abstractmethod
-    def authenticate(self, password: str) -> str:
+    def authenticate(self, password: str, **kwargs) -> str:
         """
         Authenticate the user with the given password.
 
@@ -28,7 +28,7 @@ class Authenticator(ABC):
         pass
 
     @abstractmethod
-    def use_token(self, token: str) -> bool:
+    def use_token(self, token: str, **kwargs) -> bool:
         """
         Use the given token to verify authentication.
 
@@ -64,7 +64,7 @@ class SinglePassAuth(Authenticator):
         self.password = password
         self.tokens: dict[str, int] = {}
 
-    def authenticate(self, password: str) -> str:
+    def authenticate(self, password: str, **kwargs) -> str:
         """
         Authenticate the user with the given password.
 
@@ -81,7 +81,7 @@ class SinglePassAuth(Authenticator):
             self.tokens[token] = cur_time
         return token
 
-    def use_token(self, token: str) -> bool:
+    def use_token(self, token: str, **kwargs) -> bool:
         """
         Use the given token to verify authentication.
 

@@ -26,8 +26,8 @@ def as_array(result: sqlalchemy.CursorResult) -> QueryResult:
                 case "memoryview":
                     row_dict[key] = row.get(key).tobytes().decode()
                 case _:
-
                     row_dict[key] = row.get(key)
+
         array.append(row_dict)
     return array
 
@@ -93,9 +93,18 @@ class Database:
         clauses = _ensure_clauses(clauses)
 
         with self.sqlEngine.connect() as connection:
-            for clause in clauses:
-                results.append(as_array(connection.execute(clause[0], clause[1])))
-            if commit:
-                connection.commit()
+            transaction = connection.begin()
+            try:
+                for clause in clauses:
+                    result = connection.execute(clause[0], clause[1])
+                    if result.returns_rows:
+                        results.append(as_array(result))
+                if commit:
+                    transaction.commit()
+                else:
+                    transaction.rollback()
+            except Exception as e:
+                transaction.rollback()
+                raise e
 
         return results

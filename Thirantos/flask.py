@@ -15,8 +15,8 @@ def secure(auth: Authenticator):
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
-            token = request.headers.get("token")  # Safely get the token
-            if not token or not auth.use_token(token):
+            token = request.headers.get("Authorization")  # Safely get the token
+            if not token.startswith("Bearer ") or not auth.use_token(token.lstrip("Bearer ")):
                 return Response("Unauthorized", status=401)  # Unauthorized if token is missing or invalid
             return func(*args, **kwargs)  # Proceed if authenticated
         return wrapper
